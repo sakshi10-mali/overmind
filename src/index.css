@@ -1,13 +1,67 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --c-pink: #EF476F;
+  --c-yellow: #FFD166;
+  --c-teal: #06D6A0;
+  --c-blue: #118AB2;
+  --c-navy: #073B4C;
+  --c-white: #ffffff;
+  --bg-light: #f4f6f8;
+  --text-main: #333333;
+  --text-muted: #666666;
+  --border: #eaeaef;
+  --shadow: 0 10px 40px rgba(7, 59, 76, 0.08);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--text-main);
+  background: var(--c-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.brand,
+.font-heading {
+  font-family: 'Outfit', sans-serif;
+  color: var(--c-navy);
+  margin: 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--c-blue);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-navy);
+}
+
+:-webkit-scrollbar-thumb:hover {
+  background: var(--c-bronze);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
 }
