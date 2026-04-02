@@ -157,13 +157,19 @@ function Navbar() {
 
 function HeroSection() {
   return (
-    <section className="hero">
-      <div className="container">
+    <section className="hero" style={{ 
+      backgroundImage: `url('https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1600')`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      position: 'relative'
+    }}>
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(7, 59, 76, 0.45) 0%, rgba(7, 59, 76, 0.2) 100%)', zIndex: 0 }}></div>
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <div className="hero-content">
-          <span className="chip">Innovate. Automate. Accelerate.</span>
-          <h1>Professional technology services to scale your company faster</h1>
-          <p>Overminds designs and builds digital systems that improve productivity, customer experience, and long-term growth.</p>
-          <NavLink to="/contact" className="btn">Start Your Journey Today &nbsp;➔</NavLink>
+          <span className="chip" style={{ background: 'rgba(255, 209, 102, 0.2)', color: 'var(--c-yellow)', borderColor: 'rgba(255, 209, 102, 0.4)' }}>Innovate. Automate. Accelerate.</span>
+          <h1 style={{ color: '#fff' }}>Professional technology services to scale your company faster</h1>
+          <p style={{ color: 'rgba(255, 255, 255, 0.9)' }}>Overminds designs and builds digital systems that improve productivity, customer experience, and long-term growth.</p>
+          <NavLink to="/contact" className="btn" style={{ marginTop: '0.5rem' }}>Start Your Journey Today &nbsp;➔</NavLink>
         </div>
       </div>
     </section>
@@ -217,7 +223,7 @@ function AboutSection() {
             <li>End-to-End Delivery from plan to execution</li>
             <li>Smarter systems to reduce repetitive work</li>
           </ul>
-          <NavLink to="/about" className="btn btn-secondary">Learn More About Us</NavLink>
+          <NavLink to="/about" className="btn btn-secondary about-btn">Learn More About Us</NavLink>
         </div>
       </div>
     </section>
@@ -309,7 +315,7 @@ function ProductsSection() {
 
 function TestimonialSection() {
   return (
-    <section className="section bg-light" style={{ borderTop: '1px solid var(--border)' }}>
+    <section className="section" style={{ background: '#fff', borderTop: '1px solid var(--border)' }}>
       <div className="container">
         <div className="section-header">
           <span className="chip">Testimonials</span>
@@ -318,7 +324,7 @@ function TestimonialSection() {
         </div>
         <div className="services-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
           {testimonials.map((t, idx) => (
-            <div className="service-card" key={idx} style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', textAlign: 'left', background: '#fff', borderTop: '4px solid var(--c-teal)' }}>
+            <div className="service-card" key={idx} style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', textAlign: 'left', background: '#fff', borderTop: '4px solid var(--c-teal)', boxShadow: '0 12px 35px rgba(0,0,0,0.08)', borderRadius: '12px', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 45px rgba(0,0,0,0.12)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 12px 35px rgba(0,0,0,0.08)'; }}>
               <div style={{ color: '#FFD166', letterSpacing: '4px', fontSize: '1.4rem' }}>
                 {'★'.repeat(t.rating)}
               </div>
@@ -538,6 +544,85 @@ function CommonServiceDetail({ service }) {
           </ul>
         </div>
       </div>
+
+      {/* How it helps your business section - modern, aesthetic, client-attractive */}
+      <div className="section bg-light" style={{ padding: '4rem 0' }}>
+        <div style={{ width: 'min(1440px, 96%)', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', maxWidth: 900, margin: '0 auto' }}>
+            <span className="chip" style={{ background: 'linear-gradient(135deg, var(--c-yellow) 0%, #ffb347 100%)', color: '#fff', border: 'none', fontWeight: 700, fontSize: '1rem', letterSpacing: '0.5px', boxShadow: '0 4px 12px rgba(255,209,102,0.3)' }}>Business Impact</span>
+            <h2 style={{ margin: '2rem 0 1.5rem', color: 'var(--c-navy)', fontWeight: 800, fontSize: '2.8rem', letterSpacing: '-1px', lineHeight: '1.2' }}>How Our AI Systems Improve Your Business Performance</h2>
+            <p style={{ color: '#4a5568', fontSize: '1.3rem', lineHeight: '1.7', marginBottom: '3.5rem', fontWeight: 500, maxWidth: '700px', marginLeft: 'auto', marginRight: 'auto' }}>
+              Automate workflows, reduce operational costs, and increase conversions — all with intelligent AI-driven systems built for your business.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }}>
+            <div style={{ background: '#fff', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', padding: '2.5rem 1.5rem', textAlign: 'center', transition: 'all 0.3s ease', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-8px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--c-blue)' }}>⚡</div>
+              <div style={{ color: 'var(--c-navy)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.5rem' }}>Automated Operations</div>
+              <div style={{ color: '#4a5568', fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>Reduce manual work and automate repetitive tasks — saving hours of effort every day.</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>⏱ <span>Save 4–6 hrs/day</span></div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>⚙️ <span>70% process automation</span></div>
+              </div>
+            </div>
+            <div style={{ background: '#fff', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', padding: '2.5rem 1.5rem', textAlign: 'center', transition: 'all 0.3s ease', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-8px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--c-yellow)' }}>📊</div>
+              <div style={{ color: 'var(--c-navy)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.5rem' }}>Data-Driven Decisions</div>
+              <div style={{ color: '#4a5568', fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>Track leads, performance, and business metrics in real-time with smart dashboards.</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>📈 <span>Real-time analytics</span></div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>🎯 <span>Better conversion tracking</span></div>
+              </div>
+            </div>
+            <div style={{ background: '#fff', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', padding: '2.5rem 1.5rem', textAlign: 'center', transition: 'all 0.3s ease', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-8px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--c-blue)' }}>🤝</div>
+              <div style={{ color: 'var(--c-navy)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.5rem' }}>24/7 Customer Handling</div>
+              <div style={{ color: '#4a5568', fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>Respond instantly to customer queries and never miss a potential lead.</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>💬 <span>Instant replies</span></div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>🌐 <span>Multi-platform support</span></div>
+              </div>
+            </div>
+            <div style={{ background: '#fff', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', padding: '2.5rem 1.5rem', textAlign: 'center', transition: 'all 0.3s ease', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-8px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff6b6b' }}>💰</div>
+              <div style={{ color: 'var(--c-navy)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.5rem' }}>Reduce Operational Cost</div>
+              <div style={{ color: '#4a5568', fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>Replace repetitive manual tasks with automation and reduce dependency on large teams.</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>💸 <span>Save up to 60% cost</span></div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>🤖 <span>AI replaces repetitive work</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* How it works section - energetic, aesthetic, professional */}
+      <div className="section" style={{ background: '#fff', padding: '4rem 0' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <span className="chip" style={{ background: 'rgba(17, 138, 178, 0.15)', color: 'var(--c-blue)', borderColor: 'rgba(17, 138, 178, 0.3)', fontWeight: 700, fontSize: '1rem', letterSpacing: '0.5px' }}>How It Works</span>
+            <h2 style={{ margin: '1.5rem 0 1rem', color: 'var(--c-navy)', fontWeight: 800, fontSize: '2.3rem', letterSpacing: '-1px' }}>Your Success Journey</h2>
+          </div>
+          <div className="services-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem' }}>
+            <div className="service-card" style={{ background: '#fff', borderRadius: '16px', boxShadow: '0 10px 40px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.04)', padding: '2.5rem 1.5rem', textAlign: 'center', transition: 'all 0.3s ease', cursor: 'pointer' }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--c-blue)' }}>💡</div>
+              <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--c-navy)', fontWeight: 700 }}>1. Discovery & Strategy</h4>
+              <p style={{ color: '#2d3748', fontSize: '1.05rem', lineHeight: '1.6' }}>We dive deep into your goals and challenges, then craft a winning strategy tailored just for you.</p>
+            </div>
+            <div className="service-card" style={{ background: '#fff', borderRadius: '16px', boxShadow: '0 10px 40px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.04)', padding: '2.5rem 1.5rem', textAlign: 'center', transition: 'all 0.3s ease', cursor: 'pointer' }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--c-yellow)' }}>⚙️</div>
+              <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--c-navy)', fontWeight: 700 }}>2. Implementation</h4>
+              <p style={{ color: '#2d3748', fontSize: '1.05rem', lineHeight: '1.6' }}>Our experts build, integrate, and launch your solution with zero hassle and full transparency.</p>
+            </div>
+            <div className="service-card" style={{ background: '#fff', borderRadius: '16px', boxShadow: '0 10px 40px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.04)', padding: '2.5rem 1.5rem', textAlign: 'center', transition: 'all 0.3s ease', cursor: 'pointer' }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--c-blue)' }}>🚀</div>
+              <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: 'var(--c-navy)', fontWeight: 700 }}>3. Growth & Support</h4>
+              <p style={{ color: '#2d3748', fontSize: '1.05rem', lineHeight: '1.6' }}>We monitor, optimize, and support your business so you can scale confidently and sustainably.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <CallToAction />
     </>
   );
@@ -593,7 +678,7 @@ function ServicesPage() {
         backgroundPosition: 'center',
         position: 'relative'
       }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(7, 59, 76, 0.95) 0%, rgba(7, 59, 76, 0.6) 100%)' }}></div>
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(7, 59, 76, 0.5) 0%, rgba(7, 59, 76, 0.3) 100%)' }}></div>
         <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <span className="chip" style={{ background: 'rgba(255, 209, 102, 0.15)', color: 'var(--c-yellow)', borderColor: 'rgba(255, 209, 102, 0.3)' }}>Our Expertise</span>
           <h1 style={{ color: '#fff', fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', marginBottom: '1rem' }}>All Services</h1>
@@ -666,7 +751,7 @@ function AboutPage() {
         backgroundPosition: 'center',
         position: 'relative'
       }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(7, 59, 76, 0.95) 0%, rgba(7, 59, 76, 0.6) 100%)' }}></div>
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(7, 59, 76, 0.5) 0%, rgba(7, 59, 76, 0.3) 100%)' }}></div>
         <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <span className="chip" style={{ background: 'rgba(255, 209, 102, 0.15)', color: 'var(--c-yellow)', borderColor: 'rgba(255, 209, 102, 0.3)' }}>Discover Our Story</span>
           <h1 style={{ color: '#fff', fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', marginBottom: '1rem' }}>About Us</h1>
@@ -819,7 +904,7 @@ function ContactPage() {
         backgroundPosition: 'center',
         position: 'relative'
       }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(7, 59, 76, 0.95) 0%, rgba(7, 59, 76, 0.6) 100%)' }}></div>
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(7, 59, 76, 0.5) 0%, rgba(7, 59, 76, 0.3) 100%)' }}></div>
         <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <span className="chip" style={{ background: 'rgba(255, 209, 102, 0.15)', color: 'var(--c-yellow)', borderColor: 'rgba(255, 209, 102, 0.3)' }}>Get In Touch</span>
           <h1 style={{ color: '#fff', fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', marginBottom: '1rem' }}>Contact Us</h1>
