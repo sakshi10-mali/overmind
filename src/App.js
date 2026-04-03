@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, Route, Routes, useParams, useLocation } from 'react-router-dom';
+import { NavLink, Route, Routes, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Phone } from 'lucide-react';
 import './App.css';
 
@@ -116,6 +116,22 @@ function ScrollToTop() {
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const navRef = React.useRef(null);
+
+  React.useEffect(() => {
+    function handleClickOutside(event) {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
+
   return (
     <>
       <div className="topbar-shell">
@@ -137,10 +153,11 @@ function Navbar() {
           </div>
         </div>
       </div>
-      <header className="nav-shell">
+      <header className="nav-shell" ref={navRef}>
         <div className="container nav">
           <NavLink to="/" className="brand">
             <img src="/overminds_new.png" alt="Overminds" />
+            <span>Overminds</span>
           </NavLink>
           <button className="mobile-menu-btn" onClick={() => setIsOpen(!isOpen)}>
             ☰
@@ -236,7 +253,7 @@ function AboutSection() {
 function ServicesSection() {
   return (
     <section className="section bg-light">
-      <div className="container">
+      <div className="container" style={{ width: 'min(1440px, 96%)', maxWidth: 'none' }}>
         <div className="section-header">
           <span className="chip">Our Solutions</span>
           <h2>Our Core Services</h2>
@@ -327,7 +344,7 @@ function TestimonialSection() {
         </div>
         <div className="services-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
           {testimonials.map((t, idx) => (
-            <div className="service-card" key={idx} style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', textAlign: 'left', background: '#fff', borderTop: '4px solid var(--c-teal)', boxShadow: '0 12px 35px rgba(0,0,0,0.08)', borderRadius: '12px', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 45px rgba(0,0,0,0.12)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 12px 35px rgba(0,0,0,0.08)'; }}>
+            <div className="service-card" key={idx} style={{ padding: '2.5rem', display: 'grid', gridTemplateColumns: '1fr', gap: '1.5rem', textAlign: 'left', background: '#fff', borderTop: '4px solid var(--c-teal)', boxShadow: '0 12px 35px rgba(0,0,0,0.08)', borderRadius: '12px', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 45px rgba(0,0,0,0.12)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 12px 35px rgba(0,0,0,0.08)'; }}>
               <div style={{ color: '#FFD166', letterSpacing: '4px', fontSize: '1.4rem' }}>
                 {'★'.repeat(t.rating)}
               </div>
@@ -578,7 +595,7 @@ function CommonServiceDetail({ service }) {
               <div style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--c-blue)' }}>⚡</div>
               <div style={{ color: 'var(--c-navy)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.5rem' }}>Automated Operations</div>
               <div style={{ color: '#4a5568', fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>Reduce manual work and automate repetitive tasks — saving hours of effort every day.</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>⏱ <span>Save 4–6 hrs/day</span></div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>⚙️ <span>70% process automation</span></div>
               </div>
@@ -587,7 +604,7 @@ function CommonServiceDetail({ service }) {
               <div style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--c-yellow)' }}>📊</div>
               <div style={{ color: 'var(--c-navy)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.5rem' }}>Data-Driven Decisions</div>
               <div style={{ color: '#4a5568', fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>Track leads, performance, and business metrics in real-time with smart dashboards.</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>📈 <span>Real-time analytics</span></div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>🎯 <span>Better conversion tracking</span></div>
               </div>
@@ -596,7 +613,7 @@ function CommonServiceDetail({ service }) {
               <div style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--c-blue)' }}>🤝</div>
               <div style={{ color: 'var(--c-navy)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.5rem' }}>24/7 Customer Handling</div>
               <div style={{ color: '#4a5568', fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>Respond instantly to customer queries and never miss a potential lead.</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>💬 <span>Instant replies</span></div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>🌐 <span>Multi-platform support</span></div>
               </div>
@@ -605,7 +622,7 @@ function CommonServiceDetail({ service }) {
               <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff6b6b' }}>💰</div>
               <div style={{ color: 'var(--c-navy)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.5rem' }}>Reduce Operational Cost</div>
               <div style={{ color: '#4a5568', fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>Replace repetitive manual tasks with automation and reduce dependency on large teams.</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>💸 <span>Save up to 60% cost</span></div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>🤖 <span>AI replaces repetitive work</span></div>
               </div>
@@ -727,7 +744,7 @@ function CommonProductDetail({ product }) {
               <div style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--c-blue)' }}>⚡</div>
               <div style={{ color: 'var(--c-navy)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.5rem' }}>Speed & Efficiency</div>
               <div style={{ color: '#4a5568', fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>Process tasks in seconds instead of hours.</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>⏱ <span>10x Faster</span></div>
               </div>
             </div>
@@ -735,7 +752,7 @@ function CommonProductDetail({ product }) {
               <div style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--c-yellow)' }}>💰</div>
               <div style={{ color: 'var(--c-navy)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.5rem' }}>Cost Reduction</div>
               <div style={{ color: '#4a5568', fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>Lower operational costs dramatically.</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>📉 <span>High ROI</span></div>
               </div>
             </div>
@@ -743,7 +760,7 @@ function CommonProductDetail({ product }) {
               <div style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--c-blue)' }}>📈</div>
               <div style={{ color: 'var(--c-navy)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.5rem' }}>Scalability</div>
               <div style={{ color: '#4a5568', fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>Handle infinite scale without adding headcount.</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>🚀 <span>Scale effortlessly</span></div>
               </div>
             </div>
@@ -751,7 +768,7 @@ function CommonProductDetail({ product }) {
               <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff6b6b' }}>🛡️</div>
               <div style={{ color: 'var(--c-navy)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.5rem' }}>Reliability</div>
               <div style={{ color: '#4a5568', fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>Zero downtime and consistent performance.</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.5rem', fontSize: '0.95rem', color: 'var(--c-navy)', fontWeight: 600 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>🎯 <span>99.9% Uptime</span></div>
               </div>
             </div>
@@ -769,7 +786,7 @@ function CommonProductDetail({ product }) {
           </div>
           <div className="services-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
             {testimonials.map((t, idx) => (
-              <div className="service-card" key={idx} style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', textAlign: 'left', background: '#fff', borderTop: '4px solid var(--c-teal)', boxShadow: '0 12px 35px rgba(0,0,0,0.08)', borderRadius: '12px', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 45px rgba(0,0,0,0.12)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 12px 35px rgba(0,0,0,0.08)'; }}>
+              <div className="service-card" key={idx} style={{ padding: '2.5rem', display: 'grid', gridTemplateColumns: '1fr', gap: '1.5rem', textAlign: 'left', background: '#fff', borderTop: '4px solid var(--c-teal)', boxShadow: '0 12px 35px rgba(0,0,0,0.08)', borderRadius: '12px', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 15px 45px rgba(0,0,0,0.12)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 12px 35px rgba(0,0,0,0.08)'; }}>
                 <div style={{ color: '#FFD166', letterSpacing: '4px', fontSize: '1.4rem' }}>
                   {'★'.repeat(t.rating)}
                 </div>
@@ -796,6 +813,7 @@ function CommonProductDetail({ product }) {
 
 // Inner Pages
 function ServicesPage() {
+  const navigate = useNavigate();
   return (
     <>
       <div className="hero" style={{
@@ -821,7 +839,7 @@ function ServicesPage() {
       <div className="section bg-light">
         <div className="container">
           {services.map((service, index) => (
-            <div className={`service-detail-row ${index % 2 !== 0 ? 'reverse' : ''}`} key={service.slug}>
+            <div className={`service-detail-row ${index % 2 !== 0 ? 'reverse' : ''}`} key={service.slug} onClick={() => navigate(`/services/${service.slug}`)} style={{ cursor: 'pointer' }}>
               <div className="service-detail-img">
                 <img
                   src={service.image}
