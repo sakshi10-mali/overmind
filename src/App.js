@@ -103,7 +103,7 @@ const techStack = [
   { name: 'MySQL', image: '/logo/MySQL.png' },
   { name: 'PostgreSQL', image: '/logo/postgre.png' },
   { name: 'MongoDB', image: '/logo/mongo.png' },
-  { name: 'Next.js', image: '/logo/next.png' },
+  { name: 'Next.js', image: '/logo/nextjs.png' },
   { name: 'Docker', image: '/logo/docker.png' },
   { name: 'AWS', image: '/logo/aws.png' }
 ];
@@ -233,11 +233,11 @@ function Navbar() {
       <div className="topbar-shell">
         <div className="container topbar">
           <div className="topbar-left">
-            <span>✉️ overminds@gmail.com</span>
+            <span>✉️ overmindstech@gmail.com</span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><Phone size={14} /> +91 7666782771</span>
           </div>
           <div className="topbar-right" style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-            <a href="#linkedin" aria-label="LinkedIn" style={{ display: 'flex', alignItems: 'center' }}>
+            <a href="https://www.linkedin.com/in/overminds-technology-1ab5bb317/" aria-label="LinkedIn" style={{ display: 'flex', alignItems: 'center' }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
             </a>
             <a href="#instagram" aria-label="Instagram" style={{ display: 'flex', alignItems: 'center' }}>
@@ -501,7 +501,7 @@ function ContactBlock() {
                   <div className="c-info-icon">✉️</div>
                   <div className="c-info-text">
                     <strong>Email Us</strong>
-                    <span>overminds@gmail.com</span>
+                    <span>overmindstech@gmail.com</span>
                   </div>
                 </div>
                 <div className="c-info-item">
@@ -603,7 +603,7 @@ function Footer() {
               We help teams automate operations, improve lead conversion, and launch modern digital products with speed and quality.
             </p>
             <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
-              <a href="#linkedin" aria-label="LinkedIn" style={{ color: '#fff', transition: 'color 0.3s ease' }} onMouseOver={(e) => e.currentTarget.style.color = 'var(--c-yellow)'} onMouseOut={(e) => e.currentTarget.style.color = '#fff'}>
+              <a href="https://www.linkedin.com/in/overminds-technology-1ab5bb317/" aria-label="LinkedIn" style={{ color: '#fff', transition: 'color 0.3s ease' }} onMouseOver={(e) => e.currentTarget.style.color = 'var(--c-yellow)'} onMouseOut={(e) => e.currentTarget.style.color = '#fff'}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
               </a>
               <a href="#instagram" aria-label="Instagram" style={{ color: '#fff', transition: 'color 0.3s ease' }} onMouseOver={(e) => e.currentTarget.style.color = 'var(--c-yellow)'} onMouseOut={(e) => e.currentTarget.style.color = '#fff'}>
@@ -635,7 +635,7 @@ function Footer() {
           <div>
             <h4>Contact Info</h4>
             <ul className="f-links">
-              <li>Email:overminds@gmail.com</li>
+              <li>Email:overmindstech@gmail.com</li>
               <li>Phone:+91 7666782771</li>
             </ul>
           </div>
@@ -1440,7 +1440,7 @@ function PrivacyPolicyPage() {
             <h2 style={{ color: 'var(--c-navy)', marginTop: '2.5rem', marginBottom: '1rem', fontSize: '1.8rem' }}>5. Contact Information</h2>
             <p>If you have any questions regarding this Privacy Policy, you may contact us using the information below:</p>
             <ul style={{ listStyleType: 'none', paddingLeft: 0, marginTop: '1rem', color: 'var(--c-blue)' }}>
-              <li><strong>Email:</strong> overminds@gmail.com</li>
+              <li><strong>Email:</strong> overmindstech@gmail.com</li>
               <li><strong>Phone:</strong> +91 7666782771</li>
             </ul>
           </div>
@@ -1496,7 +1496,7 @@ function TermsAndConditionsPage() {
             <h2 style={{ color: 'var(--c-navy)', marginTop: '2.5rem', marginBottom: '1rem', fontSize: '1.8rem' }}>6. Contact Information</h2>
             <p>For any inquiries regarding our Terms & Conditions, please contact us:</p>
             <ul style={{ listStyleType: 'none', paddingLeft: 0, marginTop: '1rem', color: 'var(--c-blue)' }}>
-              <li><strong>Email:</strong> overminds@gmail.com</li>
+              <li><strong>Email:</strong> overmindstech@gmail.com</li>
             </ul>
           </div>
         </div>

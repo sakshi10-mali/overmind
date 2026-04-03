@@ -5,7 +5,7 @@ export const techStack = [
   { name: 'MySQL', image: '/logo/MySQL.png' },
   { name: 'PostgreSQL', image: '/logo/postgre.png' },
   { name: 'MongoDB', image: '/logo/mongo.png' },
-  { name: 'Next.js', image: '/logo/next.png' },
+  { name: 'Next.js', image: '/logo/nextjs.png' },
   { name: 'Docker', image: '/logo/docker.png' },
   { name: 'AWS', image: '/logo/aws.png' }
 ];
