@@ -108,6 +108,102 @@ const techStack = [
   { name: 'AWS', image: '/logo/aws.png' }
 ];
 
+const CONTACT_API_URL = process.env.REACT_APP_CONTACT_API_URL || '/api/contact';
+
+const AUTOMATION_QUIZ_QUESTIONS = [
+  {
+    q: 'What type of business do you run?',
+    sub: 'Helps us tailor the recommendation.',
+    opts: [
+      { t: 'Real estate / property', d: 'Agents, brokers, developers', s: { fit: 3, urg: 2, bud: 2 } },
+      { t: 'E-commerce / retail', d: 'Online or offline sales', s: { fit: 3, urg: 3, bud: 2 } },
+      { t: 'Education / coaching', d: 'Schools, institutes, tutors', s: { fit: 2, urg: 2, bud: 1 } },
+      { t: 'Services / consulting', d: 'Agencies, clinics, finance', s: { fit: 2, urg: 2, bud: 2 } }
+    ]
+  },
+  {
+    q: 'How big is your team?',
+    sub: 'Automation ROI scales with team size.',
+    opts: [
+      { t: '1–5 people', d: 'Solo or micro-business', s: { fit: 1, urg: 2, bud: 1 } },
+      { t: '6–20 people', d: 'Small but growing', s: { fit: 2, urg: 2, bud: 2 } },
+      { t: '21–100 people', d: 'Mid-size operation', s: { fit: 3, urg: 3, bud: 3 } },
+      { t: '100+ people', d: 'Large enterprise', s: { fit: 3, urg: 3, bud: 3 } }
+    ]
+  },
+  {
+    q: "What's your biggest bottleneck?",
+    sub: 'Pick the one that hurts most right now.',
+    opts: [
+      { t: 'Slow lead follow-up', d: 'Leads go cold before we respond', s: { fit: 3, urg: 3, bud: 2 } },
+      { t: 'Manual data entry', d: 'Staff wasting hours on repetitive tasks', s: { fit: 3, urg: 2, bud: 2 } },
+      { t: 'No business visibility', d: "Can't see real-time numbers", s: { fit: 2, urg: 2, bud: 3 } },
+      { t: 'Customer support overload', d: 'Same questions repeated daily', s: { fit: 3, urg: 3, bud: 1 } }
+    ]
+  },
+  {
+    q: 'How do you manage leads today?',
+    sub: 'Be honest — this shapes your recommendation.',
+    opts: [
+      { t: 'WhatsApp / phone only', d: 'No CRM, fully manual', s: { fit: 3, urg: 3, bud: 1 } },
+      { t: 'Spreadsheets', d: 'Excel or Google Sheets', s: { fit: 3, urg: 2, bud: 1 } },
+      { t: 'Basic CRM (Zoho etc.)', d: 'Not fully configured', s: { fit: 2, urg: 2, bud: 2 } },
+      { t: 'Advanced CRM', d: 'Mostly sorted, want add-ons', s: { fit: 1, urg: 1, bud: 3 } }
+    ]
+  },
+  {
+    q: 'How many leads do you get per month?',
+    sub: 'Rough estimate is fine.',
+    opts: [
+      { t: 'Less than 50', d: 'Early stage', s: { fit: 1, urg: 1, bud: 1 } },
+      { t: '50 – 200', d: 'Steady volume', s: { fit: 2, urg: 2, bud: 2 } },
+      { t: '200 – 1000', d: 'High volume', s: { fit: 3, urg: 3, bud: 2 } },
+      { t: '1000+', d: 'Very high — hard to manage', s: { fit: 3, urg: 3, bud: 3 } }
+    ]
+  },
+  {
+    q: "What's your automation budget?",
+    sub: 'Helps us suggest the right starting point.',
+    opts: [
+      { t: 'Under ₹50,000', d: 'Want to start very small', s: { fit: 1, urg: 1, bud: 1 } },
+      { t: '₹50K – ₹2L', d: 'Ready for a focused module', s: { fit: 2, urg: 2, bud: 2 } },
+      { t: '₹2L – ₹10L', d: 'Serious investment planned', s: { fit: 3, urg: 2, bud: 3 } },
+      { t: '₹10L+', d: 'Full transformation project', s: { fit: 3, urg: 3, bud: 3 } }
+    ]
+  }
+];
+
+async function submitContactForm(event) {
+  event.preventDefault();
+
+  const form = event.currentTarget;
+  const formData = new FormData(form);
+  const payload = {
+    name: formData.get('name')?.toString().trim() || '',
+    email: formData.get('email')?.toString().trim() || '',
+    phone: formData.get('phone')?.toString().trim() || '',
+    subject: formData.get('subject')?.toString().trim() || '',
+    message: formData.get('message')?.toString().trim() || ''
+  };
+
+  try {
+    const response = await fetch(CONTACT_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to send message');
+    }
+
+    form.reset();
+    window.alert('Thank you! Your message has been sent successfully.');
+  } catch (error) {
+    window.alert('Sorry, we could not send your message right now. Please try again.');
+  }
+}
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
@@ -428,15 +524,15 @@ function ContactBlock() {
               <p>Fill out the information below and our technology experts will get in touch with you shortly to discuss your custom plan.</p>
             </div>
 
-            <form className="modern-c-form" onSubmit={(e) => e.preventDefault()}>
+            <form className="modern-c-form" onSubmit={submitContactForm}>
               <div className="form-group-grid">
                 <div className="input-group">
-                  <input type="text" id="name" placeholder=" " required />
+                  <input type="text" id="name" name="name" placeholder=" " required />
                   <label htmlFor="name">Full Name</label>
                   <div className="input-highlight"></div>
                 </div>
                 <div className="input-group">
-                  <input type="email" id="email" placeholder=" " required pattern={"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"} title="Please enter a valid email address." />
+                  <input type="email" id="email" name="email" placeholder=" " required pattern={"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"} title="Please enter a valid email address." />
                   <label htmlFor="email">Email Address</label>
                   <div className="input-highlight"></div>
                 </div>
@@ -444,19 +540,23 @@ function ContactBlock() {
 
               <div className="form-group-grid">
                 <div className="input-group">
-                  <input type="tel" id="phone" placeholder=" " required pattern={"^[0-9]{10}$"} title="Please enter exactly 10 digits for the mobile number." />
+                  <input type="tel" id="phone" name="phone" placeholder=" " required pattern={"^[0-9]{10}$"} title="Please enter exactly 10 digits for the mobile number." />
                   <label htmlFor="phone">Phone Number</label>
                   <div className="input-highlight"></div>
                 </div>
                 <div className="input-group">
-                  <input type="text" id="subject" placeholder=" " required />
-                  <label htmlFor="subject">Subject / Company</label>
+                  <select id="subject" name="subject" defaultValue="" required>
+                    <option value="" disabled>Select a service</option>
+                    {services.map((service) => (
+                      <option key={service.slug} value={service.title}>{service.title}</option>
+                    ))}
+                  </select>
                   <div className="input-highlight"></div>
                 </div>
               </div>
 
               <div className="input-group full-width">
-                <textarea id="message" rows="4" placeholder=" " required></textarea>
+                <textarea id="message" name="message" rows="4" placeholder=" " required></textarea>
                 <label htmlFor="message">How can we help you scale?</label>
                 <div className="input-highlight"></div>
               </div>
@@ -811,6 +911,211 @@ function CommonProductDetail({ product }) {
   );
 }
 
+function AutomationQuizCard() {
+  const QQ = AUTOMATION_QUIZ_QUESTIONS;
+  const [cur, setCur] = useState(0);
+  const [answers, setAnswers] = useState(() => new Array(QQ.length).fill(null));
+  const [finished, setFinished] = useState(false);
+  const [result, setResult] = useState(null);
+
+  const q = QQ[cur];
+  const isLast = cur === QQ.length - 1;
+  const selected = answers[cur];
+
+  function selectOpt(idx) {
+    setAnswers((prev) => {
+      const next = [...prev];
+      next[cur] = idx;
+      return next;
+    });
+  }
+
+  function computeResult(ans) {
+    const max = QQ.length * 3;
+    const scores = ans.reduce(
+      (acc, a, qi) => {
+        if (a === null) return acc;
+        const s = QQ[qi].opts[a].s;
+        acc.fit += s.fit;
+        acc.urg += s.urg;
+        acc.bud += s.bud;
+        return acc;
+      },
+      { fit: 0, urg: 0, bud: 0 }
+    );
+
+    const maxT = max * 3;
+    const tot = scores.fit + scores.urg + scores.bud;
+    const pct = Math.round((tot / maxT) * 100);
+
+    const tier = pct >= 65 ? 'hot' : pct >= 40 ? 'warm' : 'nurture';
+    const titles = {
+      hot: "You're ready for full automation",
+      warm: 'Strong candidate for automation',
+      nurture: 'Good time to start planning'
+    };
+    const descs = {
+      hot: 'Your volume, team size, and budget put you in prime position. Based on your answers, expect payback in 3–5 months.',
+      warm: 'You have clear pain points automation solves well. A focused starting module would deliver quick wins.',
+      nurture: 'A lightweight automation — WhatsApp bot or lead capture — makes sense now and sets you up for bigger gains.'
+    };
+    const actions = {
+      hot: "Book your free demo — we'll show a working prototype for your use case within 48 hrs.",
+      warm: "Let's do a free 30-min call to scope your first module.",
+      nurture: 'Get our free automation readiness guide — no commitment.'
+    };
+
+    const fitPct = Math.round((scores.fit / max) * 100);
+    const urgPct = Math.round((scores.urg / max) * 100);
+    const budPct = Math.round((scores.bud / max) * 100);
+
+    return { tier, pct, titles, descs, actions, fitPct, urgPct, budPct };
+  }
+
+  function next() {
+    if (answers[cur] === null) return;
+
+    if (isLast) {
+      const r = computeResult(answers);
+      setResult(r);
+      setFinished(true);
+      return;
+    }
+
+    setCur((c) => c + 1);
+  }
+
+  function restart() {
+    setCur(0);
+    setAnswers(new Array(QQ.length).fill(null));
+    setFinished(false);
+    setResult(null);
+  }
+
+  if (finished && result) {
+    const badgeText =
+      result.tier === 'hot' ? 'Hot lead — high priority' : result.tier === 'warm' ? 'Good fit' : 'Nurture lead';
+
+    return (
+      <div className="ap-quiz-card">
+        <div className="ap-quiz-result">
+          <div className={`ap-quiz-badge ap-quiz-badge--${result.tier}`}>{badgeText}</div>
+          <div className="ap-quiz-title">{result.titles[result.tier]}</div>
+          <div className="ap-quiz-desc">{result.descs[result.tier]}</div>
+
+          <div className="ap-quiz-score-grid">
+            <div className="ap-quiz-score-box">
+              <div className="ap-quiz-score-num">{result.fitPct}%</div>
+              <div className="ap-quiz-score-lbl">Product fit</div>
+            </div>
+            <div className="ap-quiz-score-box">
+              <div className="ap-quiz-score-num">{result.urgPct}%</div>
+              <div className="ap-quiz-score-lbl">Urgency</div>
+            </div>
+            <div className="ap-quiz-score-box">
+              <div className="ap-quiz-score-num">{result.budPct}%</div>
+              <div className="ap-quiz-score-lbl">Budget match</div>
+            </div>
+          </div>
+
+          <div className="ap-quiz-action">{result.actions[result.tier]}</div>
+
+          <div className="ap-quiz-btn-row">
+            <NavLink to="/contact" className="ap-quiz-primary">
+              Book a free call
+            </NavLink>
+            <button type="button" className="ap-quiz-secondary" onClick={restart}>
+              Retake quiz
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="ap-quiz-card">
+      <div className="ap-quiz-progress">
+        <div className="ap-quiz-bar" style={{ width: `${Math.round((cur / QQ.length) * 100)}%` }} />
+      </div>
+      <div className="ap-quiz-step">
+        Question {cur + 1} of {QQ.length}
+      </div>
+      <div className="ap-quiz-q">{q.q}</div>
+      <div className="ap-quiz-sub">{q.sub}</div>
+
+      <div className="ap-quiz-opts">
+        {q.opts.map((o, idx) => (
+          <button
+            type="button"
+            key={o.t}
+            className={`ap-quiz-opt ${selected === idx ? 'sel' : ''}`}
+            onClick={() => selectOpt(idx)}
+          >
+            <div className="ap-quiz-opt-title">{o.t}</div>
+            <div className="ap-quiz-opt-sub">{o.d}</div>
+          </button>
+        ))}
+      </div>
+
+      <div className="ap-quiz-nav">
+        <div className="ap-quiz-dots" aria-hidden="true">
+          {QQ.map((_, i) => (
+            <div key={i} className={`ap-quiz-dot ${i < cur ? 'done' : i === cur ? 'active' : ''}`} />
+          ))}
+        </div>
+        <button type="button" className="ap-quiz-next" onClick={next} disabled={selected === null}>
+          {isLast ? 'See my result →' : 'Next →'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function AutomationQuizModal({ open, onClose }) {
+  useEffect(() => {
+    if (!open) return;
+    function onKeyDown(e) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [open, onClose]);
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  if (!open) return null;
+
+  return (
+    <div className="ap-quiz-modal" role="dialog" aria-modal="true" aria-label="Find your perfect automation">
+      <button type="button" className="ap-quiz-backdrop" onClick={onClose} aria-label="Close" />
+      <div className="ap-quiz-panel">
+        <div className="ap-quiz-head">
+          <div>
+            <div className="ap-quiz-chip">Lead qualifier</div>
+            <h2 className="ap-quiz-h2">Find your perfect automation</h2>
+            <p className="ap-quiz-lead">
+              6 quick questions. Get a personalised recommendation and see exactly which automation fits your business right now.
+            </p>
+          </div>
+          <button type="button" className="ap-quiz-close" onClick={onClose} aria-label="Close">
+            ✕
+          </button>
+        </div>
+
+        <AutomationQuizCard />
+      </div>
+    </div>
+  );
+}
+
 // Inner Pages
 function ServicesPage() {
   const navigate = useNavigate();
@@ -864,6 +1169,7 @@ function ServicesPage() {
           ))}
         </div>
       </div>
+
       <CallToAction />
     </>
   );
@@ -1069,14 +1375,19 @@ function ContactPage() {
               <h2 style={{ fontSize: '2.2rem', marginBottom: '0.5rem' }}>Send Us A Message</h2>
               <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>Fill out the form below and we'll get back to you shortly.</p>
             </div>
-            <form className="standalone-form" onSubmit={(e) => e.preventDefault()}>
+            <form className="standalone-form" onSubmit={submitContactForm}>
               <div className="form-group-grid">
-                <input type="text" placeholder="Your Name" required />
-                <input type="email" placeholder="Your Email" required pattern={"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"} title="Please enter a valid email address." />
+                <input type="text" name="name" placeholder="Your Name" required />
+                <input type="email" name="email" placeholder="Your Email" required pattern={"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"} title="Please enter a valid email address." />
               </div>
-              <input type="tel" placeholder="Phone Number" required pattern={"^[0-9]{10}$"} title="Please enter exactly 10 digits for the mobile number." />
-              <input type="text" placeholder="Subject" required />
-              <textarea rows="5" placeholder="Your Message" required></textarea>
+              <input type="tel" name="phone" placeholder="Phone Number" required pattern={"^[0-9]{10}$"} title="Please enter exactly 10 digits for the mobile number." />
+              <select name="subject" required defaultValue="">
+                <option value="" disabled>Select Service</option>
+                {services.map((service) => (
+                  <option key={service.slug} value={service.title}>{service.title}</option>
+                ))}
+              </select>
+              <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
               <button type="submit" className="custom-submit-btn">Submit Message</button>
             </form>
           </div>
@@ -1211,6 +1522,7 @@ function HomePage() {
 }
 
 export default function App() {
+  const [quizOpen, setQuizOpen] = useState(false);
   return (
     <div className="site">
       <ScrollToTop />
@@ -1225,6 +1537,14 @@ export default function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
       </Routes>
+
+      {!quizOpen && (
+        <button type="button" className="floating-quiz-btn" onClick={() => setQuizOpen(true)}>
+          Find best service for you
+        </button>
+      )}
+      <AutomationQuizModal open={quizOpen} onClose={() => setQuizOpen(false)} />
+
       <Footer />
     </div>
   );
